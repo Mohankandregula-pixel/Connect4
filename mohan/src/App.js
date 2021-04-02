@@ -24,7 +24,11 @@ class Board extends Component {
     super();
     this.state = {
       boardState: new Array(7).fill(new Array(6).fill(null)),
-      playerTurn: 'Red',
+      player1:1,
+      player2:2,
+      player1color: 'Red',
+      player2color:'Blue',
+      playerTurn:'Red',
       gameMode: '',
       gameSelected: false,
       winner: ''
@@ -63,9 +67,14 @@ class Board extends Component {
   
   /*check the winner and make AI move IF game is in AI mode*/
   componentDidUpdate(){
-    let winner = checkWinner(this.state.boardState)
-    if(this.state.winner !== winner){
-      this.setState({winner: winner})
+    var win = checkWinner(this.state.boardState)
+    
+
+    console.log(win)
+    if(this.state.winner !== win){
+      console.log(this.state.winner)
+      this.setState({ winner : win })
+      console.log(this.state.winner)
     } else {
        if(this.state.gameMode === 'ai' && this.state.playerTurn === 'Blue'){
         let validMove = -1;
@@ -111,7 +120,7 @@ class Board extends Component {
         <div className={winnerMessageStyle}>{this.state.winner}</div>
         {(!this.state.gameSelected || this.state.winner !== '') &&
           <div>
-            <button onClick={() => this.selectedGame('human')}>Play Human</button>
+            <button onClick={() => this.selectedGame('human')}>Play Game</button>
           </div>
         }
       </div>
@@ -119,14 +128,83 @@ class Board extends Component {
   }
 }
 
+class App extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      launch:false
+
+    }
+  }
+  render(){
+    if(this.state.launch){
+      return (<Hello />)
+    }
+    else{
+      return this.renderHTML()
+    }
+  }
+
+  launch=()=>{
+    this.setState({
+      launch:true
+    })
+  }
+  
+  renderHTML(){
+    return (
+      <div>
+      <h1 class="App">Mohan's Connect4</h1>
+
+<h3 class="App"><u>Instructions to be followed</u></h3>
+<p class="App">In Connect4,the first player starting Connect Four by dropping one of their yellow discs into the center column of an empty game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves a diagonal four in a row, and wins the game. If the board fills up before either player achieves four in a row, then the game is a draw.</p>
+<div>
+<button class="button" onClick={this.launch}>Launch Game</button>
+</div>
+    </div>
+    
+    )
+  }
+  
+} 
+
+
+    
+
+
 
 class Hello extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      input1:"",
+      input2:""
+    }
+
+  }
+
+  UpdateResponse1=(event)=>{
+    this.setState({
+      input1:event.target.value
+    })
+  }
+
+  UpdateResponse2=(event)=>{
+    this.setState({
+      input2:event.target.value
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Mohan Connect IV</h2>
+          <label>First player:</label>&nbsp;&nbsp;
+          < input onChange={this.UpdateResponse1} value={this.state.input1} />&nbsp;&nbsp;&nbsp;
+          <label>Second player:</label>&nbsp;&nbsp;
+          < input onChange={this.UpdateResponse2} value={this.state.input2} />
         </div>
         <div className="Game">
           <Board></Board>
@@ -144,65 +222,28 @@ function checkWinner(bs) {
     for (let c = 0; c < 7; c++)
         for (let r = 0; r < 4; r++)
             if (checkLine(bs[c][r], bs[c][r+1], bs[c][r+2], bs[c][r+3]))
-                return bs[c][r] + ' wins!'
+              
+                return bs[c][r]+' Wins!'
 
     for (let r = 0; r < 6; r++)
          for (let c = 0; c < 4; c++)
              if (checkLine(bs[c][r], bs[c+1][r], bs[c+2][r], bs[c+3][r]))
-                 return bs[c][r] + ' wins!'
+                 return bs[c][r]+' Wins!'
 
     for (let r = 0; r < 3; r++)
          for (let c = 0; c < 4; c++)
              if (checkLine(bs[c][r], bs[c+1][r+1], bs[c+2][r+2], bs[c+3][r+3]))
-                 return bs[c][r] + ' wins!'
+                 return bs[c][r]+' Wins!'
 
     for (let r = 0; r < 4; r++)
          for (let c = 3; c < 6; c++)
              if (checkLine(bs[c][r], bs[c-1][r+1], bs[c-2][r+2], bs[c-3][r+3]))
-                 return bs[c][r] + ' wins!'
+                 return bs[c][r]+' Wins!'
 
     return "";
 }
 
-  class App extends Component {
-    render(){
-      return (
-        <Router>
-        <div class="App-header">
-          <Route path="/" render={
-            () =>{
-              return(
-                <div>
-                <h1 class="App">Mohan's Connect4</h1>
-        
-        <h3 class="App"><u>Instructions to br followed</u></h3>
-        <p class="App">In Connect4,the first player starting Connect Four by dropping one of their yellow discs into the center column of an empty game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves a diagonal four in a row, and wins the game. If the board fills up before either player achieves four in a row, then the game is a draw.</p>
-  
-              </div>
-              )
-              
-              
 
-            }
-          } />
-          <div>
-          <button class="button"><NavLink to="/game" exact activeStyle={{ color:'green' }}>Launch Game</NavLink></button>
-          </div>
-          
-
-          <Route path="/game" exact strict render={
-          () => {
-            return ( <Hello />);
-          }
-        }/>
-        
-      </div>
-
-      </Router>
-      )
-    }
-
-  }
 
 export default App;
 

@@ -9,8 +9,8 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  height: 170px;
+  padding: 25px;
   color: white;
 }
 
@@ -40,8 +40,8 @@ button {
 }
 
 button:hover {
-    background-color: lightblue;
-    font-size: 14pt;
+    background-color: rgb(46, 96, 161);
+    
 }
 
 .Board {
@@ -49,7 +49,7 @@ button:hover {
 }
 
 .Slat {
-  background-color: blueviolet;
+  background-color: rgba(255, 255, 255, 0.733);
 
 }
 
