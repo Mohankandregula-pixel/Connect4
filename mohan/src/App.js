@@ -24,10 +24,6 @@ class Board extends Component {
     super();
     this.state = {
       boardState: new Array(7).fill(new Array(6).fill(null)),
-      player1:1,
-      player2:2,
-      player1color: 'Red',
-      player2color:'Blue',
       playerTurn:'Red',
       gameMode: '',
       gameSelected: false,
@@ -68,13 +64,8 @@ class Board extends Component {
   /*check the winner and make AI move IF game is in AI mode*/
   componentDidUpdate(){
     var win = checkWinner(this.state.boardState)
-    
-
-    console.log(win)
     if(this.state.winner !== win){
-      console.log(this.state.winner)
       this.setState({ winner : win })
-      console.log(this.state.winner)
     } else {
        if(this.state.gameMode === 'ai' && this.state.playerTurn === 'Blue'){
         let validMove = -1;
@@ -157,7 +148,7 @@ class App extends Component {
       <h1 class="App">Mohan's Connect4</h1>
 
 <h3 class="App"><u>Instructions to be followed</u></h3>
-<p class="App">In Connect4,the first player starting Connect Four by dropping one of their yellow discs into the center column of an empty game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves a diagonal four in a row, and wins the game. If the board fills up before either player achieves four in a row, then the game is a draw.</p>
+<ul class="Instruct">In Connect4,the first player starting Connect Four by dropping one of their yellow discs into the center column of an empty game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves a diagonal four in a row, and wins the game. If the board fills up before either player achieves four in a row, then the game is a draw.</ul>
 <div>
 <button class="button" onClick={this.launch}>Launch Game</button>
 </div>
