@@ -69,7 +69,7 @@ button:hover {
   position: relative;
   min-width: 50px;
   min-height: 50px;
-  border-radius: 40px;
+  border-radius: 4px;
   top: -400px;
   transition: transform 0.5s;
 }
